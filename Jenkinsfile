@@ -1,47 +1,143 @@
 pipeline {
+
+ 
+
   agent any
+
+ 
+
   stages {
-	stage('Maven Compile'){
-		steps{
-			echo 'Project compile stage'
-			bat label: 'Compilation running', script: '''mvn compile'''
-      	}
-	}
 
-	stage('Unit Test') {
-  		steps {
-			echo 'Project Testing stage'
-			bat label: 'Test running', script: '''mvn test'''
-       }
-   }
-   stage('Jacoco Coverage Report') {
+ 
+
+    stage('Maven Compile'){
+
+ 
+
         steps{
-            jacoco()
-		}
-	}
-post {
-       always {
-           cucumber '**/cucumber.json'
+
+ 
+
+            echo 'Project compile stage'
+
+ 
+
+            bat label: 'Compilation running', script: '''mvn compile'''
+
+ 
+
+          }
+
+ 
+
+    }
+
+ 
+
+ 
+
+    stage('Unit Test') {
+
+ 
+
+          steps {
+
+ 
+
+            echo 'Project Testing stage'
+
+ 
+
+            bat label: 'Test running', script: '''mvn test'''
+
+ 
+
+       
+
+ 
+
        }
-   }
-   stage('SonarQube'){
 
-steps{
+ 
 
-bat label: '', script: '''mvn sonar:sonar \
+       }
 
--Dsonar.host.url=http://localhost:9000 \
+       stage('Jacoco Coverage Report') {
 
--Dsonar.login=squ_98c87b818c3af9d5bc42031e0c9d6cd78bdfcb97'''
+ 
 
-}
+        steps{
 
-   } 
-	stage('Maven Package'){
-		steps{
-			echo 'Project packaging stage'
-			bat label: 'Project packaging', script: '''mvn package'''
-		}
-	} 
+ 
+
+            jacoco()
+
+ 
+
+        }
+
+ 
+
+    }
+
+    stage('SonarQube'){
+
+ 
+
+        steps{
+
+ 
+
+            bat label: '', script: '''mvn sonar:sonar \
+
+ 
+
+            -Dsonar.host.url=http://localhost:9000 \
+
+ 
+
+            -Dsonar.login=squ_1450272800ed853bfab8d665b2ce6e9742eafade'''
+
+ 
+
+        }
+
+ 
+
+       }
+
+ 
+
+ 
+
+    stage('Maven Package'){
+
+ 
+
+        steps{
+
+ 
+
+            echo 'Project packaging stage'
+
+ 
+
+            bat label: 'Project packaging', script: '''mvn package'''
+
+ 
+
+        }
+
+ 
+
+    }
+
+ 
+
+ 
+
   }
+
+ 
+
 }
