@@ -96,7 +96,7 @@ pipeline {
 
  
 
-            -Dsonar.login=squ_1450272800ed853bfab8d665b2ce6e9742eafade'''
+            -Dsonar.login=squ_98c87b818c3af9d5bc42031e0c9d6cd78bdfcb97'''
 
  
 
