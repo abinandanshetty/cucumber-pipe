@@ -19,20 +19,24 @@ pipeline {
             jacoco()
 		}
 	}
-	stage('Generate Cucumber report') {
-            steps{
-                 cucumber buildStatus: 'UNSTABLE',
-                      reportTitle: 'My Cucumber Report',
-                      fileIncludePattern: '**/*.json',
-                         trendsLimit: 10,
-                      classifications: [
-                          [
-                              'key': 'Browser',
-                              'value': 'Chrome'
-                          ]
-                      ]
-                  }
-         }
+post {
+       always {
+           cucumber '**/cucumber.json'
+       }
+   }
+   stage('SonarQube'){
+
+steps{
+
+bat label: '', script: '''mvn sonar:sonar \
+
+-Dsonar.host.url=http://localhost:9000 \
+
+-Dsonar.login=squ_98c87b818c3af9d5bc42031e0c9d6cd78bdfcb97'''
+
+}
+
+   } 
 	stage('Maven Package'){
 		steps{
 			echo 'Project packaging stage'
